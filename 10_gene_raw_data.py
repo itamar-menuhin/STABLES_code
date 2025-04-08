@@ -44,8 +44,8 @@ def calculate_pvalue_between_experiments(df, exp1, exp2):
     p_value = 1 - stats.t.cdf(t_stat, 1)
     return p_value
 
-def compute_mean_ratios_and_ttest(dataframe, output_path):
-        """
+def compute_mean_ratios_and_ttest(df, output_path):
+    """
     Calculate the mean ratio and standard error of the ratios between final and initial normalized fluorescence values
 for each experiment. Perform a t-test to compare the mean ratio of GFP with the mean ratio of other experiments.
 
@@ -57,12 +57,12 @@ and 'normalized_fluorescence'.
     Returns:
     None
     """
-    experiments = dataframe['experiment'].drop_duplicates()
+    experiments = df['experiment'].drop_duplicates()
     results = []
 
     for experiment in experiments:
         # Subset data for the current experiment
-        curr_data = dataframe[dataframe['experiment'] == experiment]
+        curr_data = df[df['experiment'] == experiment]
         curr_data = curr_data[['time', 'sample', 'normalized_fluorescence']].dropna()
 
         # Separate initial and final values
