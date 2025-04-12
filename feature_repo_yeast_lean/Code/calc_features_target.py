@@ -4,14 +4,9 @@
 calc_features_target.py - Target-specific feature calculation module
 
 This module calculates features related to target gene sequences for gene expression
-optimization and comparison. It implements functions to compare a target gene sequence
-with endogenous sequences using multiple distance metrics, and aggregates additional
-features from other modules.
-
-The key features calculated include:
-- Codon frequency distances (L1, L2, Spearman, Pearson, KS)
-- Amino acid frequency distances
-- Integration with other feature calculation modules for comprehensive analysis
+optimization and comparison. It compares a target gene sequence with endogenous sequences
+using multiple distance metrics and integrates additional features from other modules
+(CUB, sORF, sequence-based, disorder, chemical).
 
 Author: [Author Name]
 Affiliation: [Institution]
@@ -34,7 +29,7 @@ import pandas as pd
 from scipy.stats import spearmanr, pearsonr, ks_2samp
 import os
 
-# Import local modules - Use the same import pattern as original code
+# Import local modules (reused functions)
 from .utils import calc_ATG_PSSM
 from .calc_features_CUB import calc_CUB
 from .calc_features_sORF import calc_sORF
@@ -42,11 +37,10 @@ from .calc_features_seq import calc_nuc_fraction, calc_AA_kmers
 from .calc_features_disorder import calc_disorder
 from .calc_features_chemical import calc_chemical
 
-# Constants - DO NOT CHANGE - preserves output alignment
+# Constants
 CODON_TABLE_PATH = '../Data/codon_tables.pkl'
 DISTANCE_TYPES = ["L2", "L1", "spearman", "pearson", "KS"]
 
-# Load codon table
 with open(CODON_TABLE_PATH, 'rb') as handle:
     CODON_TABLE = pickle.load(handle)[0]
 
@@ -55,50 +49,50 @@ def calculate_target_features(features, target_sequence):
     """
     Calculate target-specific features for a given target gene.
     
-    This function compares the target gene sequence properties with endogenous 
-    gene sequences and calculates various distance metrics between them,
-    which can be used for gene expression optimization.
+    The function computes codon and amino acid frequency vectors for the target,
+    compares them with each endogenous gene using various distance metrics,
+    and aggregates additional features from other modules.
     
     Parameters
     ----------
-    features : pandas.DataFrame
-        The input features DataFrame containing endogenous gene sequences.
-        Must contain an 'ORF' column.
+    features : pd.DataFrame
+        DataFrame containing endogenous gene sequences (must include an 'ORF' column).
     target_sequence : str
-        The target gene nucleotide sequence to compare against.
+        The target gene nucleotide sequence.
         
     Returns
     -------
-    pandas.DataFrame
-        The updated features DataFrame with target-specific features added.
+    pd.DataFrame
+        Updated features DataFrame with target-specific features added.
     """
     print("Calculating target-specific features...")
-
-    # Calculate target properties
+    # Calculate target frequencies using a helper defined below.
     target_codon_freq, target_aa_freq = calculate_frequencies(target_sequence)
     
-    # CRITICAL: This creates two temporary columns that must be computed exactly as original
+    # Compute frequencies for endogenous sequences using the same function.
     features["codon_freq"], features["aa_freq"] = zip(*features["ORF"].apply(calculate_frequencies))
-
-    # Calculate distances between target and endogenous properties
-    # CRITICAL: The property_name and distance_name order must be preserved
-    for property_name, target_property in zip(["codon_freq", "aa_freq"], [target_codon_freq, target_aa_freq]):
-        for distance_name in DISTANCE_TYPES:
-            features[f"{property_name}_{distance_name}"] = features[property_name].apply(
-                lambda prop: calculate_distance(target_property, prop, distance_name)
+    
+    # Calculate distances between target and endogenous properties.
+    for property_name, target_prop in zip(["codon_freq", "aa_freq"],
+                                          [target_codon_freq, target_aa_freq]):
+        for distance_type in DISTANCE_TYPES:
+            features[f"{property_name}_{distance_type}"] = features[property_name].apply(
+                lambda prop: calculate_distance(target_prop, prop, distance_type)
             )
-
-    # Add features from other modules
-    # CRITICAL: The order of function application must be preserved exactly
+    
+    # Integrate additional features (order preserved exactly as in the original pipeline)
     for func in [calc_CUB, calc_sORF, calc_nuc_fraction, calc_AA_kmers, calc_disorder, calc_chemical]:
         features = func(features)
-
+    
     return features
 
 
 def calculate_frequencies(sequence):
     """
-    Calculate codon and amino acid frequencies for a sequence.
+    Calculate codon and amino acid frequencies for a nucleotide sequence.
+    
+    If the sequence ends with a stop codon ("TAG", "TGA", or "TAA"), it is removed.
+    The nucleotide sequence is then translated, and frequencies are computed using CODON_TABLE.
     
     Parameters
     ----------
@@ -108,26 +102,25 @@ def calculate_frequencies(sequence):
     Returns
     -------
     tuple
-        (codon_frequencies, amino_acid_frequencies) as lists of frequency values.
+        (codon_frequencies, amino_acid_frequencies)
     """
-    # CRITICAL: Preserve original stop codon handling
-    sequence = sequence[:-3] if sequence[-3:] in ["TAG", "TGA", "TAA"] else sequence
+    # Remove stop codon if present
+    if sequence[-3:] in ["TAG", "TGA", "TAA"]:
+        sequence = sequence[:-3]
     
-    # Translate to amino acid sequence
     seq_obj = Seq(sequence)
     amino_acid_seq = str(seq_obj.translate(to_stop=True))
-
-    # Calculate codon frequencies - CRITICAL: Use exact same calculation as original
+    
+    # Calculate codon frequencies using the predefined codon table.
     codon_frequencies = []
     for codon_list in CODON_TABLE.values():
         for codon in codon_list:
             count = sequence.count(codon)
             codon_frequencies.append(count / (len(sequence) // 3))
-
-    # Calculate amino acid frequencies - CRITICAL: Use exact same calculation as original
-    amino_acid_frequencies = [amino_acid_seq.count(aa) / len(amino_acid_seq) 
-                             for aa in CODON_TABLE.keys()]
-
+    
+    # Calculate amino acid frequencies.
+    amino_acid_frequencies = [amino_acid_seq.count(aa) / len(amino_acid_seq) for aa in CODON_TABLE.keys()]
+    
     return codon_frequencies, amino_acid_frequencies
 
 
@@ -135,80 +128,85 @@ def calculate_distance(vector1, vector2, distance_type):
     """
     Calculate the distance between two vectors using various metrics.
     
+    Supported metrics:
+      - "L2": Euclidean norm
+      - "L1": Manhattan norm
+      - "spearman": Spearman correlation
+      - "pearson": Pearson correlation (using statistic attribute)
+      - "KS": Kolmogorov-Smirnov statistic
+    
     Parameters
     ----------
-    vector1 : list or array-like
-        First vector to compare.
-    vector2 : list or array-like
-        Second vector to compare.
+    vector1, vector2 : list or array-like
+        The frequency vectors to compare.
     distance_type : str
-        Type of distance metric to use. Must be one of:
-        "L2" (Euclidean), "L1" (Manhattan), "spearman", "pearson", or "KS".
+        One of "L2", "L1", "spearman", "pearson", or "KS".
         
     Returns
     -------
     float
-        The calculated distance value.
+        The computed distance.
         
     Raises
     ------
     ValueError
-        If an invalid distance type is specified.
+        If an invalid distance type is provided.
     """
+    v1 = np.array(vector1)
+    v2 = np.array(vector2)
     if distance_type == "L2":
-        return np.linalg.norm(np.array(vector1) - np.array(vector2), ord=2)
+        return np.linalg.norm(v1 - v2, ord=2)
     elif distance_type == "L1":
-        return np.linalg.norm(np.array(vector1) - np.array(vector2), ord=1)
+        return np.linalg.norm(v1 - v2, ord=1)
     elif distance_type == "spearman":
-        return spearmanr(vector1, vector2).correlation
+        return spearmanr(v1, v2).correlation
     elif distance_type == "pearson":
-        return pearsonr(vector1, vector2).statistic
+        return pearsonr(v1, v2).statistic
     elif distance_type == "KS":
-        return ks_2samp(vector1, vector2).statistic
-    raise ValueError(f"Invalid distance type: {distance_type}")
+        return ks_2samp(v1, v2).statistic
+    else:
+        raise ValueError(f"Invalid distance type: {distance_type}")
 
 
 def calculate_initiation_features(sequence):
     """
     Calculate initiation-related features for a sequence.
     
-    These features characterize the translation initiation context
-    by analyzing ATG codons and their surrounding sequences.
+    This function analyzes the start codon context of the provided sequence. The sequence must start with ATG.
+    It computes a PSSM score for the initiation region using the calc_ATG_PSSM function.
     
     Parameters
     ----------
     sequence : str
-        The nucleotide sequence, must start with ATG.
+        Nucleotide sequence (must start with ATG).
         
     Returns
     -------
     dict
-        A dictionary of initiation-related features.
+        A dictionary with initiation-related features.
         
     Raises
     ------
-    ValueError
+    ValueError:
         If the sequence does not start with ATG.
     """
     sequence = sequence.upper()
     if not sequence.startswith("ATG"):
         raise ValueError("Sequence must start with ATG")
-
-    # CRITICAL: Use the same window size as original code
+    
     window_size = 30  # In codons
+    atg_positions = [m.start() for m in re.finditer("ATG", sequence) if m.start() % 3 == 0]
+    filtered_positions = [
+        pos for pos in atg_positions
+        if (pos // 3) < window_size and (pos + 5) < len(sequence)
+    ]
     
-    atg_positions = [match.start() for match in re.finditer("ATG", sequence) if match.start() % 3 == 0]
-    filtered_positions = [pos for pos in atg_positions if (pos // 3) < window_size and (pos + 5) < len(sequence)]
-
     pssm_matrix = calc_ATG_PSSM()
-    
-    # CRITICAL: Calculate PSSM scores exactly as in original code
     pssm_scores = [
-        np.prod([pssm_matrix[i][sequence[pos + i]] for i in range(3)]) 
+        np.prod([pssm_matrix[i][sequence[pos + i]] for i in range(3)])
         for pos in filtered_positions
     ]
-
-    # CRITICAL: Feature names and calculation must be identical to original
+    
     return {
         "ATG_ORF": max(len(atg_positions) - 1, 0),
         f"ATG_ORF_window{window_size}": max(len(filtered_positions) - 1, 0),

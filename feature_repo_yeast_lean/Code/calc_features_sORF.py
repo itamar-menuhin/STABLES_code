@@ -3,12 +3,11 @@
 """
 calc_features_sORF.py - Shifted Open Reading Frame (sORF) feature calculation module
 
-This module calculates features related to shifted Open Reading Frames (sORFs) within gene
-sequences. Shifted ORFs represent alternative reading frames that differ from the primary 
-reading frame and can impact translation efficiency through mechanisms like ribosome 
-frameshifting.
+Calculates features related to shifted Open Reading Frames (sORFs) within gene sequences.
+Shifted ORFs represent alternative reading frames that differ from the primary reading frame
+and can impact translation efficiency through mechanisms like ribosome frameshifting.
 
-The key features calculated include:
+Key features calculated include:
 - Number of shifted ORFs in the sequence
 - Maximum and mean shifted ORF lengths
 - Window-based analysis of shifted ORF presence and characteristics
@@ -29,48 +28,37 @@ References:
 import pandas as pd
 from Bio.Seq import Seq
 
-# Define sORF window sizes in codons - DO NOT CHANGE - preserves output alignment
+# Define sORF window sizes in codons - DO NOT CHANGE (preserves output alignment)
 SORF_WINDOWS = [30, 200]
-
 
 def calculate_sORF(sequence):
     """
-    Calculate shifted Open Reading Frame (sORF) features for a sequence.
-    
-    This function identifies potential alternative reading frames that are
-    shifted from the primary reading frame of the gene and calculates
-    various metrics related to these shifted ORFs.
+    Calculate shifted Open Reading Frame (sORF) features for a nucleotide sequence.
     
     Parameters
     ----------
     sequence : str
-        The nucleotide sequence to analyze
+        Nucleotide sequence to analyze.
         
     Returns
     -------
     dict
-        Dictionary containing shifted ORF-related features
+        Dictionary containing shifted ORF-related features.
     """
     seq_obj = Seq(sequence)
     
-    # Find all potential start codons (ATG)
-    start_positions = [i for i in range(len(seq_obj)) if seq_obj[i:i + 3] == "ATG"]
+    # Identify start (ATG) and stop codon positions (TAG, TAA, TGA)
+    start_positions = [i for i in range(len(seq_obj)) if seq_obj[i:i+3] == "ATG"]
+    stop_positions = [i for i in range(len(seq_obj)) if seq_obj[i:i+3] in {"TAG", "TAA", "TGA"}]
     
-    # Find all stop codons (TAG, TAA, TGA)
-    stop_positions = [
-        i for i in range(len(seq_obj))
-        if seq_obj[i:i + 3] in {"TAG", "TAA", "TGA"}
-    ]
-    
-    # Calculate valid ORF lengths (must be multiple of 3 from start to stop)
+    # Calculate valid ORF lengths: stop must be after start and the length must be a multiple of 3
     orf_lengths = [
         stop - start + 3
-        for start in start_positions
-        for stop in stop_positions
+        for start in start_positions 
+        for stop in stop_positions 
         if stop > start and (stop - start) % 3 == 0
     ]
     
-    # Calculate global shifted ORF features
     sORF_features = {
         "num_sORF": len(orf_lengths),
         "max_sORF_len": max(orf_lengths, default=0),
@@ -78,19 +66,17 @@ def calculate_sORF(sequence):
     }
     
     # Calculate shifted ORF features within defined windows
-    # CRITICAL: The window_orfs creation logic must be preserved exactly as in original code
     for window in SORF_WINDOWS:
         window_orfs = [
-            length for start, length in zip(start_positions, orf_lengths) 
+            length for start, length in zip(start_positions, orf_lengths)
             if start <= window * 3
         ]
-        
         sORF_features[f"num_sORF_win{window}"] = len(window_orfs)
         sORF_features[f"max_sORF_win{window}"] = max(window_orfs, default=0)
-        sORF_features[f"mean_sORF_win{window}"] = sum(window_orfs) / len(window_orfs) if window_orfs else 0
+        sORF_features[f"mean_sORF_win{window}"] = (sum(window_orfs) / len(window_orfs)
+                                                  if window_orfs else 0)
     
     return sORF_features
-
 
 def calculate_sORF_features(features):
     """
@@ -99,17 +85,13 @@ def calculate_sORF_features(features):
     Parameters
     ----------
     features : pandas.DataFrame
-        The gene data with an 'ORF' column containing nucleotide sequences
+        DataFrame with an 'ORF' column containing nucleotide sequences.
         
     Returns
     -------
     pandas.DataFrame
-        Updated DataFrame with shifted ORF features
+        Updated DataFrame with shifted ORF features appended.
     """
     print("Calculating shifted ORF features...")
-    
-    # Apply calculation to each sequence - CRITICAL: maintain exact column creation order
     sORF_features_df = features["ORF"].apply(calculate_sORF).apply(pd.Series)
-    
-    # Combine with original features
     return pd.concat([features, sORF_features_df], axis=1)

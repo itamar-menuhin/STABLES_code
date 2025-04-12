@@ -3,12 +3,11 @@
 """
 calc_features_seq.py - Sequence-based feature calculation module
 
-This module calculates fundamental sequence-based features including
-nucleotide composition and amino acid k-mer frequencies. These features
-can reflect codon bias, GC content preferences, and amino acid motifs
-that influence protein expression and function.
+Calculates fundamental sequence-based features including nucleotide composition and
+amino acid k-mer frequencies. These features can reflect codon bias, GC content preferences,
+and amino acid motifs that influence protein expression and function.
 
-The key features calculated include:
+Key features calculated include:
 - Nucleotide fractions (A, T, G, C content)
 - Amino acid k-mer frequencies (k = 3, 4, 5)
 
@@ -38,25 +37,21 @@ def calc_nuc_fraction(features):
     Parameters
     ----------
     features : pandas.DataFrame
-        The gene data with an 'ORF' column containing nucleotide sequences
+        Gene data containing an 'ORF' column with nucleotide sequences.
         
     Returns
     -------
     pandas.DataFrame
-        Updated DataFrame with nucleotide fraction features
+        Updated DataFrame with nucleotide fraction features.
     """
     print("Calculating nucleotide fractions...")
-    
     for gene in features.index:
         seq = features.loc[gene, "ORF"].upper()
-        total_length = len(seq)
-        
-        # CRITICAL: Calculate fractions exactly as in original
-        features.loc[gene, "frac_A"] = seq.count("A") / total_length
-        features.loc[gene, "frac_T"] = seq.count("T") / total_length
-        features.loc[gene, "frac_G"] = seq.count("G") / total_length
-        features.loc[gene, "frac_C"] = seq.count("C") / total_length
-    
+        total = len(seq)
+        features.loc[gene, "frac_A"] = seq.count("A") / total
+        features.loc[gene, "frac_T"] = seq.count("T") / total
+        features.loc[gene, "frac_G"] = seq.count("G") / total
+        features.loc[gene, "frac_C"] = seq.count("C") / total
     return features
 
 
@@ -67,16 +62,16 @@ def extract_kmers(sequence, k):
     Parameters
     ----------
     sequence : str
-        The amino acid sequence
+        Amino acid sequence.
     k : int
-        The k-mer length
+        k-mer length.
         
     Returns
     -------
     Counter
-        A counter object with k-mer counts
+        Counter object with k-mer counts.
     """
-    return Counter(str(sequence)[i:i+k] for i in range(len(sequence) - k + 1))
+    return Counter(sequence[i:i+k] for i in range(len(sequence) - k + 1))
 
 
 def calc_AA_kmers(features):
@@ -86,35 +81,35 @@ def calc_AA_kmers(features):
     Parameters
     ----------
     features : pandas.DataFrame
-        The gene data with amino acid sequences in the 'AA' column
+        Gene data with amino acid sequences in the 'AA' column.
         
     Returns
     -------
     pandas.DataFrame
-        Updated DataFrame with k-mer features
+        Updated DataFrame with k-mer features.
     """
     print("Calculating amino acid k-mers...")
-    k_values = range(3, 6)  # k = 3, 4, 5
-    
     for gene in features.index:
         aa_seq = features.loc[gene, "AA"]
-        
-        # CRITICAL: Calculate unique k-mer counts exactly as in original
-        for k in k_values:
+        for k in range(3, 6):
             features.loc[gene, f"kmer_{k}"] = len(extract_kmers(aa_seq, k))
-    
     return features
 
 
 def calculate_seq_features(features):
     """
-    Calculate sequence-based features (nucleotide fractions and amino acid k-mers) for each gene.
-
-    Parameters:
-    features (pandas.DataFrame): The gene data with 'ORF' and 'AA' columns.
-
-    Returns:
-    pandas.DataFrame: The updated gene data with sequence-based features.
+    Calculate sequence-based features (nucleotide fractions and amino acid k-mers)
+    for each gene.
+    
+    Parameters
+    ----------
+    features : pandas.DataFrame
+        Gene data with 'ORF' and 'AA' columns.
+        
+    Returns
+    -------
+    pandas.DataFrame
+        Updated gene data with sequence-based features.
     """
     print("Calculating sequence-based features...")
     features = calc_nuc_fraction(features)

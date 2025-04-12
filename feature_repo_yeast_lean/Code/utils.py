@@ -36,6 +36,7 @@ import numpy as np
 from Bio.Seq import Seq
 from Bio.SeqUtils import CodonAdaptationIndex
 from statistics import geometric_mean
+from collections import Counter, defaultdict
 from Code.generate_highly_expressed_genes import load_highly_expressed_genes
 
 # Constants - DO NOT CHANGE - preserves output alignment
@@ -270,6 +271,42 @@ def sliding_window(sequence, window_size, step_size):
     # CRITICAL: Use exact same window generation as original
     for i in range(0, len(sequence) - window_size + 1, step_size):
         yield sequence[i:i + window_size]
+
+
+def calculate_enc(codons, amino_acid_to_codons):
+    """
+    Calculate the Effective Number of Codons (ENC) for a given list of codons.
+    
+    ENC ranges from 20 (extreme bias) to 61 (no bias). Lower ENC values
+    indicate stronger codon usage bias.
+    
+    Parameters
+    ----------
+    codons : list of str
+        List of codons extracted from a gene sequence.
+    amino_acid_to_codons : dict
+        Mapping of amino acids to their synonymous codons.
+        
+    Returns
+    -------
+    float
+        The ENC value computed using Wright's formula:
+        ENC = 2 + 9/F_2 + 1/F_3 + 5/F_4 + 3/F_6,
+        where F_i is the average homozygosity for amino acids with i synonymous codons.
+    """
+    degeneracy_frequencies = defaultdict(list)
+    
+    for amino_acid, codon_list in amino_acid_to_codons.items():
+        counts = Counter(codon for codon in codons if codon in codon_list).values()
+        if counts:
+            frequencies = [(count / sum(counts)) ** 2 for count in counts]
+            degeneracy_frequencies[len(codon_list)].append(sum(frequencies))
+    
+    return 2 + sum(
+        (weight / np.average(degeneracy_frequencies[level])
+         if degeneracy_frequencies[level] else weight)
+        for level, weight in zip([2, 3, 4, 6], [9, 1, 5, 3])
+    )
 
 
 if __name__ == "__main__":
