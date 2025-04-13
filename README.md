@@ -1,42 +1,138 @@
-# Model Improvement Project
+# Gene Expression Model Improvement
 
-This repository contains code for improving machine learning models.
+This repository contains the code and data used in our study on gene expression model improvement. It includes modules for data processing, feature extraction, model evaluation, and visualization. The results in this repository support the findings presented in our paper.
 
-## Structure
+## Repository Structure
 
-- `src/`: Source code for the project
-- `tests/`: Test cases
-- `data/`: Data files (not tracked by git)
-- `notebooks/`: Jupyter notebooks for exploration
-- `docs/`: Documentation
-
-## Setup
-
-```bash
-# Clone the repository
-git clone [repository URL]
-
-# Create a virtual environment
-python -m venv venv
-
-# Activate the virtual environment
-# On Windows:
-venv\Scripts\activate
-# On Unix/MacOS:
-source venv/bin/activate
-
-# Install dependencies
-pip install -e .
 ```
+GeneExpressionModelImprovement/
+├── .gitignore
+├── README.md                     # This documentation file
+├── setup.py                      # Setup script for package installation
+├── data/
+│   ├── raw_data/                # Raw input files (e.g., gene sequences, experimental measurements)
+│   └── processed_data/          # Processed/intermediate datasets
+├── docs/                        # Extended documentation, methods, and supplementary information
+├── figures/                     # High-resolution figures for publication
+├── src/                         # Main application code
+│   └── main.py                  # Entry point for running analyses
+├── A_feature_generation/        # Feature extraction modules for gene sequences (e.g., yeast, E. coli)
+│   ├── Code/
+│   │   ├── calc_features.py             # Orchestrates all feature extraction computations
+│   │   ├── calc_features_CUB.py         # Codon Usage Bias (CUB) feature calculations
+│   │   ├── calc_features_seq.py         # Sequence-based features (e.g., nucleotide fractions, AA k-mers)
+│   │   ├── calc_features_lfe.py         # Local folding energy (LFE) calculations
+│   │   ├── calc_features_sORF.py        # Shifted ORF (sORF) feature analysis
+│   │   ├── calc_features_ATG.py         # Start codon (ATG) context features & PSSM scores
+│   │   └── utils.py                     # Common utility functions (e.g., ENC calculation)
+│   ├── Data/                            # Data specific to feature extraction
+│   ├── Output/                          # Output files from feature computations
+│   └── python-project/                  # Additional project-specific code
+├── fusion_pipeline.py           # Pipeline for translation, linker selection, codon optimization, etc.
+├── insulin_visualization.py     # Visualization module for insulin-related gene expression data
+├── label_distribution_analysis.py   # Visualization of label distributions from predictions
+├── xgb_feature_importance.py    # Analysis of XGBoost SHAP feature importance
+├── B_model_architecture_analysis.py   # Model architecture evaluation scripts
+├── C_linker_selection.py        # Linker selection for fusion proteins
+├── D_codon_optimization.py      # Codon optimization routines for target genes
+├── E_hypermutable_site_detection.py   # Hypermutable site detection in gene sequences
+└── translation_utils.py         # Utility functions for sequence translation and related tasks
+```
+
+## Installation
+
+1. **Clone the Repository:**
+
+   ```bash
+   git clone <repository-url>
+   cd GeneExpressionModelImprovement/
+   ```
+
+2. **Create and Activate a Virtual Environment:**
+
+   ```bash
+   python -m venv venv
+   # For Windows:
+   venv\Scripts\activate
+   # For Unix or macOS:
+   source venv/bin/activate
+   ```
+
+3. **Install Dependencies:**
+
+   ```bash
+   pip install -e .
+   ```
 
 ## Usage
 
-[Add usage examples here]
+### Running the Main Analysis Pipeline
 
-## Contributing
+To execute the full analysis pipeline (which includes feature extraction, model evaluation, and visualization):
 
-[Add contribution guidelines here]
+```bash
+python src/main.py
+```
+
+### Running Specific Modules
+
+- **Feature Extraction:**
+  ```bash
+  python A_feature_generation/python-project/main.py
+  ```
+- **Fusion Protein Design Pipeline:**
+  ```bash
+  python fusion_pipeline.py
+  ```
+- **Model Architecture Analysis:**
+  ```bash
+  python B_model_architecture_analysis.py
+  ```
+- **Linker Selection Analysis:**
+  ```bash
+  python C_linker_selection.py
+  ```
+- **Codon Optimization:**
+  ```bash
+  python D_codon_optimization.py
+  ```
+- **Hypermutable Site Detection:**
+  ```bash
+  python E_hypermutable_site_detection.py
+  ```
+- **XGBoost Feature Importance:**
+  ```bash
+  python xgb_feature_importance.py
+  ```
+- **Insulin Visualization:**
+  ```bash
+  python insulin_visualization.py
+  ```
+- **Label Distribution Analysis:**
+  ```bash
+  python label_distribution_analysis.py
+  ```
+
+## Data
+
+- **Raw Data:**  
+  Place your raw data files (e.g., gene sequences, experimental measurements) in the `data/raw_data/` directory.
+
+- **Processed Data:**  
+  The processed outputs generated by the analysis pipelines will be stored in `data/processed_data/`.
+
+## Figures
+
+The `figures/` directory contains high-resolution plots and visualizations generated by this analysis, ready for inclusion in the publication.
+
+## Documentation
+
+Additional technical details, methodology, and supplementary results are documented in the `docs/` folder.
 
 ## License
 
-[Add license information here]
+This project is distributed under the MIT License. For details, refer to the [LICENSE](LICENSE) file.
+
+---
+
+For any questions regarding the methodology or usage, please refer to the documentation in the `docs/` folder.

@@ -20,10 +20,10 @@ import time
 import pandas as pd
 from os import chdir
 
-from fusion_translation_utils import gene_seq_2_aa
-from fusion_linker_selection import best_fusion_linker
-from fusion_codon_optimization import AA_to_codon_dict, AA2nt_translate
-from fusion_sequence_analysis import find_suspect
+from translation_utils import gene_seq_2_aa
+from C_linker_selection import best_fusion_linker
+from D_codon_optimization import AA_to_codon_dict, AA2nt_translate
+from E_hypermutable_site_detection import find_suspect
 
 
 def step_2(target_seq, host_seq, linkers_csv, tai_csv, optimize_target):
