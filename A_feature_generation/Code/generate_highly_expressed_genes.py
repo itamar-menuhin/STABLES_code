@@ -8,10 +8,10 @@ the Effective Number of Codons (ENC) for each gene. Genes with lower ENC values
 exhibit stronger codon usage bias and are typically highly expressed.
 These genes can be used as a reference set for further CAI calculations.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

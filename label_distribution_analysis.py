@@ -9,10 +9,10 @@ to evaluate consistency in dual-reporter systems in yeast. It performs:
     - Correlation and regression analysis between fluorescence signals
     - Joint distribution visualization with marginal histograms on a log scale
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

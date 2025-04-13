@@ -10,10 +10,10 @@ Calculates ATG-related features including:
 
 CRITICAL: The sequence limits and window sizes (CONTEXT_WINDOW, ATG_WINDOW) are preserved.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

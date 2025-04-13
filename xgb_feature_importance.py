@@ -1,23 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-xgb_feature_importance.py - XGBoost SHAP Value Visualization Module
+xgb_feature_importance.py - XGBoost Feature Importance Analysis
 
-This module analyzes and visualizes feature importance from XGBoost models using
-SHAP (SHapley Additive exPlanations) values. It loads pre-computed SHAP values,
-calculates mean feature contributions, and generates publication-ready bar plots.
+This script analyzes feature importance using SHAP values from XGBoost models.
+It generates visualizations to highlight the most influential features in the model.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
-
-References:
-    [1] Lundberg SM, Lee SI. A Unified Approach to Interpreting Model Predictions.
-        Advances in Neural Information Processing Systems. 2017;30:4765-4774.
-    [2] Chen T, Guestrin C. XGBoost: A Scalable Tree Boosting System.
-        KDD '16: Proceedings of the 22nd ACM SIGKDD International Conference on Knowledge Discovery and Data Mining. 2016:785-794.
 """
 
 import os

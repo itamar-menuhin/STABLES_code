@@ -6,10 +6,10 @@ fusion_sequence_analysis.py - Sequence Analysis for Fusion Protein Constructs
 Detects potential issues (translational slippage, repetitive motifs, and recombination sites)
 in fusion protein constructs.
   
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 """
 

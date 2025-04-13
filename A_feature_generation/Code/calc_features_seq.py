@@ -11,10 +11,10 @@ Key features calculated include:
 - Nucleotide fractions (A, T, G, C content)
 - Amino acid k-mer frequencies (k = 3, 4, 5)
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

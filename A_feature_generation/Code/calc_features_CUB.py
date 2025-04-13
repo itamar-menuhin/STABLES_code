@@ -6,10 +6,10 @@ calc_features_CUB.py - Codon Usage Bias feature calculation module
 Calculates various codon usage bias metrics that characterize translation efficiency
 and gene expression, including CAI, tAI, ENC, RCBS, and window-based analysis.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

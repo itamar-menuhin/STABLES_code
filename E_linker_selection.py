@@ -6,10 +6,10 @@ fusion_linker_selection.py - Optimal Linker Selection for Fusion Proteins
 Selects the best linker to connect two protein sequences by comparing the disorder profiles
 of the target and host proteins before and after fusion.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 References:
     [1] Chen X, et al. Adv Drug Deliv Rev. 2013.
@@ -41,7 +41,6 @@ def best_fusion_linker(target_seq, host_seq, linkers_csv):
         df.loc[lid, 'distances_target'] = distance.euclidean(scores[:len_t], score_t_before)
         df.loc[lid, 'distances_host'] = distance.euclidean(scores[-len_h:], score_h_before)
     df.loc[:, 'sum_distances'] = df['distances_target'] + df['distances_host']
-    df.loc[:, 'score'] = (df['sum_distances'] - df['sum_distances'].min()) / df['sum_distances'].max()
+    df.loc[:, 'score'] = 1 - (df['sum_distances'] - df['sum_distances'].min()) / (df['sum_distances'].max() - df['sum_distances'].min())
     best = df.sort_values('sum_distances').head(1)
-    best.loc[:, 'score'] = 1 - best['score']
     return best.rename(columns={'name': 'linker_name', 'score': 'linker_score', 'sequence': 'linker_AA_sequence'})[['linker_name', 'linker_score', 'linker_AA_sequence']]

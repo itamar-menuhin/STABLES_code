@@ -7,10 +7,10 @@ This module implements the Chimera algorithm to compute sequence similarity feat
 for genes. The key feature is chimeraARS, which reflects the average length of shared 
 subsequences (excluding self-matches) across the genome.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

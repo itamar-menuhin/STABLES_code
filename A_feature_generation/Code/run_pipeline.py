@@ -15,10 +15,10 @@ Pipeline steps:
     4. Calculate ATG PSSM for start codon context
     5. Calculate comprehensive feature set for target gene sequences
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 References:
     [1] Sharp PM, Li WH. Nucleic Acids Res. 1987;15(3):1281-95.

@@ -1,19 +1,16 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
 fusion_pipeline.py - Fusion Protein Design Pipeline
 
-Orchestrates translation, linker selection, codon optimization, and sequence analysis
-for designing fusion proteins.
+This script orchestrates the design of fusion proteins by integrating translation,
+linker selection, codon optimization, and sequence analysis.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
-References:
-    [1] Chen X, et al. Adv Drug Deliv Rev. 2013.
-    [2] Reddy Chichili VP, et al. Protein Sci. 2013.
 """
 
 import time
@@ -21,9 +18,9 @@ import pandas as pd
 from os import chdir
 
 from translation_utils import gene_seq_2_aa
-from C_linker_selection import best_fusion_linker
-from D_codon_optimization import AA_to_codon_dict, AA2nt_translate
-from E_hypermutable_site_detection import find_suspect
+from D_linker_selection import best_fusion_linker
+from E_codon_optimization import AA_to_codon_dict, AA2nt_translate
+from F_hypermutable_site_detection import find_suspect
 
 
 def step_2(target_seq, host_seq, linkers_csv, tai_csv, optimize_target):

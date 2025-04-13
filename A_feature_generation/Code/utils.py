@@ -13,10 +13,10 @@ Key features include:
 - Start codon context analysis via Position-Specific Scoring Matrix (PSSM)
 - Sliding window analysis for local sequence features
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

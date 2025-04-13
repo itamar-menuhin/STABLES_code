@@ -9,15 +9,11 @@ This module analyzes fluorescence data from a 10-gene experiment by performing:
     • Statistical comparisons using t-tests and Kruskal-Wallis tests
     • Visualization and saving of results
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
-
-References:
-    [1] Alon U. An Introduction to Systems Biology... (2019)
-    [2] Kruskal WH, Wallis WA. JASA, 1952.
 """
 
 import os

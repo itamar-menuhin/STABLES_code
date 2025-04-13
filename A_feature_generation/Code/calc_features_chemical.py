@@ -7,10 +7,10 @@ Calculates features related to the chemical properties of proteins, including:
   - GRAVY score: Grand average of hydropathy
   - Aliphatic index: Relative volume occupied by aliphatic side chains
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

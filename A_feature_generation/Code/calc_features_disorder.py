@@ -7,10 +7,10 @@ Calculates protein disorder features for genes based on the IUPred algorithm.
 Key features include average disorder scores and percentage of disordered residues
 for the entire protein, and for defined N- and C-terminal regions.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

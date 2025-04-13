@@ -7,10 +7,10 @@ This module performs bootstrapping analysis to compute model performance metrics
 visualize quantile frequencies in heatmaps, and produce summary boxplots.
 It aggregates results for further evaluation.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 """
 

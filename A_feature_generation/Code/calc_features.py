@@ -25,10 +25,10 @@ Pipeline architecture:
 Modular design allows easy extension with additional feature types while 
 maintaining a consistent interface.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

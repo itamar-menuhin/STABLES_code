@@ -8,10 +8,10 @@ optimization and comparison. It compares a target gene sequence with endogenous 
 using multiple distance metrics and integrates additional features from other modules
 (CUB, sORF, sequence-based, disorder, chemical).
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

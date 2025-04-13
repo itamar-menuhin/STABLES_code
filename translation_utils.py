@@ -11,10 +11,10 @@ This module provides helper functions for:
 The functions here preserve the original output and are designed for use in 
 fusion protein design pipelines.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
 
 References:

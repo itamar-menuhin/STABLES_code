@@ -7,20 +7,16 @@ Provides functions to select optimal codons based on the tRNA Adaptation Index (
 and to perform reverse translation of a protein sequence using these optimal codons.
 Essential for the fusion protein design pipeline.
 
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
-
-References:
-    [1] dos Reis M, Savva R, Wernisch L. Nucleic Acids Res. 2004.
-    [2] Relevant literature on codon usage and tAI.
 """
 
 import pandas as pd
 from Bio.Data.CodonTable import unambiguous_dna_by_id
-from fusion_translation_utils import define_table
+from translation_utils import define_table
 
 
 def tai_maximal_codon(candidate_codons, tAI_dict):

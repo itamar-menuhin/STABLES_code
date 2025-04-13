@@ -1,30 +1,16 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
 """
-insulin_visualization.py - Insulin Expression Stability Analysis Module
+insulin_visualization.py - Visualization of Insulin Gene Predictions
 
-This module performs statistical analysis and visualization of insulin expression
-stability over time across different experimental conditions. The analysis includes
-linear regression of log-transformed expression data to calculate decay rates and
-statistical significance of temporal trends.
+This script generates visualizations for insulin gene predictions, including
+scatter plots, histograms, and other graphical summaries.
 
-Key methods:
-    - Log-linear regression to compute expression decay constants.
-    - Ordinary Least Squares (OLS) regression for statistical modeling.
-    - Comparative visualization of expression stability across conditions.
-    - Statistical significance testing of decay rate differences.
-
-Author: [Author Name]
-Affiliation: [Institution]
-Email: [Email]
-Date: [Date]
+Author: Itamar Menuhin-Gruman
+Affiliation: Tel Aviv University
+Email: imenuhin@gmail.com
+Date: 13.4.2025
 License: [License Type]
-
-References:
-    [1] Jørgensen K, et al. (2018). Metabolic engineering of yeast for production of fuels and chemicals.
-        FEMS Yeast Research, 18(7).
-    [2] Nielsen J. (2019). Yeast systems biology: Model organism and cell factory.
-        Biotechnology Journal, 14(9):1800421.
 """
 
 import os
