@@ -54,13 +54,13 @@ def filter_by_subsequence_pair_count(df, length):
 
 
 # Process predictions from KNN
-df_KNN = pd.read_csv("predictions_KNN.csv", index_col=0)
+df_KNN = pd.read_csv(path.join('data', 'processed_data', "predictions_KNN.csv"), index_col=0)
 df_KNN = df_KNN.sort_values("prediction_mean", ascending=False)[["prediction_mean"]]
 df_KNN = df_KNN.reset_index(names="gene").rename(columns={"prediction_mean": "prediction_KNN"})
 df_KNN["ranking_KNN"] = range(df_KNN.shape[0])
 
 # Process predictions from XGB
-df_XGB = pd.read_csv("predictions_XGB.csv", index_col=0)
+df_XGB = pd.read_csv(path.join('data', 'processed_data', "predictions_XGB.csv"), index_col=0)
 df_XGB = df_XGB.sort_values("prediction_mean", ascending=False)[["prediction_mean"]]
 df_XGB = df_XGB.reset_index(names="gene").rename(columns={"prediction_mean": "prediction_XGB"})
 df_XGB["ranking_XGB"] = range(df_XGB.shape[0])
@@ -71,7 +71,7 @@ df_both["sum_ranks"] = df_both.ranking_KNN + df_both.ranking_XGB
 df_both = df_both.sort_values("sum_ranks")
 
 # Merge with CUB features
-df_CUB = pd.read_csv("../../feature_matrices/yeast_insulin.csv", delimiter="\t", 
+df_CUB = pd.read_csv(path.join("A_feature_generation", "Output", f"yeast_insulin.csv"), delimiter="\t", 
                      usecols=["gene", "CAI_he", "CAI_all", "tAI"])
 for col in ["CAI_he", "CAI_all", "tAI"]:
     df_CUB_curr = df_CUB[["gene", col]].sort_values(col, ascending=False)
@@ -79,7 +79,7 @@ for col in ["CAI_he", "CAI_all", "tAI"]:
     df_both = pd.merge(df_both, df_CUB_curr[["gene", f"ranking_{col}"]], on="gene", how="left")
 
 # Merge with annotation data
-df_annot = pd.read_csv("annot.csv", names=["gene", "description", "ORF"])
+df_annot = pd.read_csv(path.join('data', 'processed_data', "annot.csv"), names=["gene", "description", "ORF"])
 df_both = pd.merge(df_both, df_annot, on="gene")
 
 # Compute additional features: GC content and ORF length
