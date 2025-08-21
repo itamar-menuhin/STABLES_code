@@ -31,7 +31,7 @@ plt.rc('legend', fontsize=SMALL_SIZE)
 plt.rc('figure', titlesize=BIGGER_SIZE)
 
 # Set working directory and file path for predictions
-path_all_predictions = os.path.join(['processed_data', 'all_predictions_20seeds_lean.csv'])
+path_all_predictions = os.path.join(os.path.dirname(__file__), 'data', 'processed_data', 'all_predictions_20seeds_lean.csv')
 
 
 def label_top(df, col, threshold, mode='percent'):
@@ -192,7 +192,7 @@ def bootstrap_all_models(df, sample_size=0, mode='mean'):
     return pd.concat(bootstrap_list, ignore_index=True)
 
 
-def visualize_single_model(df, model='KNN_XGB', output_path='bootstrap_graphs'):
+def visualize_single_model(df, model='KNN_XGB', output_path='figures'):
     """
     Visualize histogram plots for a single model.
     """
@@ -235,13 +235,15 @@ def plot_quantile_distribution(freq_df, output_path, add_to_title=', max on top 
     plt.ylabel('Models', fontsize=12)
     plt.xticks(rotation=45, ha='right')
     plt.tight_layout()
-    fig.savefig(output_path)
+    # Ensure output_path is in figures folder
+    fig.savefig(os.path.join('figures', os.path.basename(output_path)))
     return
 
 
 # ---- Main execution ----
 
 df_all_preds = pd.read_csv(path_all_predictions, index_col=0).fillna('none')
+df_all_preds = df_all_preds[df_all_preds.train_on == 'all']
 df_bootstrap1 = bootstrap_all_models(df_all_preds, sample_size=6000)
 
 # Rename models as required
@@ -281,14 +283,14 @@ for col, ylim, extra in boxplots:
     plt.xticks(rotation=15)
     if ylim:
         plt.ylim(*ylim)
-    fig.savefig(f'bootstrap_graphs/{col}{name_append}{extra}.png')
+    fig.savefig(os.path.join('figures', f'{col}{name_append}{extra}.png'))
 
 # Plot quantile distribution heatmaps
 df_compare = df_bootstrap[df_bootstrap.train_on == 'all']
 aa_top3 = calculate_quantile_frequencies(df_compare, quantile_col='quantile_top3')
-plot_quantile_distribution(aa_top3, 'bootstrap_graphs/top3_quantile_all.png', figsize=(12, 8), cmap='YlGnBu')
+plot_quantile_distribution(aa_top3, 'figures/top3_quantile_all.png', figsize=(12, 8), cmap='YlGnBu')
 aa_top1 = calculate_quantile_frequencies(df_compare, quantile_col='quantile_top1')
-plot_quantile_distribution(aa_top1, 'bootstrap_graphs/top1_quantile_all.png', add_to_title=', top prediction', figsize=(12, 8), cmap='YlGnBu')
+plot_quantile_distribution(aa_top1, 'figures/top1_quantile_all.png', add_to_title=', top prediction', figsize=(12, 8), cmap='YlGnBu')
 
 # Visualize single model results
 visualize_single_model(df_bootstrap2)

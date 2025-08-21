@@ -1,46 +1,45 @@
-# Gene Expression Model Improvement
+# STABLES: AI-Directed Gene Fusion for Evolutionary Stability
 
-This repository contains the code and data used in our study on gene expression model improvement. It includes modules for data processing, feature extraction, model evaluation, and visualization. The results in this repository support the findings presented in our paper.
+## Project Overview
+This repository contains the code, data, and analysis for the study:
 
-## Repository Structure
+**AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits**
 
+STABLES (Stop-codon Tunable Alternative Bifunctional mRNA Leading to Expression and Stability) is a gene fusion strategy that links a gene of interest (GOI) to an essential endogenous gene (EG) via a “leaky” stop codon. This approach leverages machine learning to predict optimal GOI-EG pairs, select linkers to minimize misfolding, and optimize DNA sequences for stability and expression. Experimental validation in *Saccharomyces cerevisiae* demonstrates substantial improvements in stability and productivity for fluorescent proteins and human proinsulin. The pipeline is scalable, adaptable, and organism-agnostic, with broad implications for synthetic biology and biotechnology.
+
+This repository provides:
+- Data processing and feature extraction scripts
+- ML-based EG selection and linker optimization
+- Model evaluation and visualization tools
+- All code and data supporting the results in the paper
+
+## Citation
+If you use this code, data, or results in your work, please cite:
+
+**Menuhin-Gruman, I., Arbel-Groissman, M., Naki, D., Bergman, S., & Tuller, T. (2025). AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits. Science Advances.**
+
+For code and data:
 ```
-GeneExpressionModelImprovement/
-├── .gitignore
-├── README.md                     # This documentation file
-├── setup.py                      # Setup script for package installation
-├── data/
-│   ├── raw_data/                # Raw input files (e.g., gene sequences, experimental measurements)
-│   └── processed_data/          # Processed/intermediate datasets
-├── docs/                        # Extended documentation, methods, and supplementary information
-├── figures/                     # High-resolution figures for publication
-├── src/                         # Main application code
-│   └── main.py                  # Entry point for running analyses
-├── A_feature_generation/        # Feature extraction modules for gene sequences (e.g., yeast, E. coli)
-│   ├── Code/
-│   │   ├── calc_features.py             # Orchestrates all feature extraction computations
-│   │   ├── calc_features_CUB.py         # Codon Usage Bias (CUB) feature calculations
-│   │   ├── calc_features_seq.py         # Sequence-based features (e.g., nucleotide fractions, AA k-mers)
-│   │   ├── calc_features_lfe.py         # Local folding energy (LFE) calculations
-│   │   ├── calc_features_sORF.py        # Shifted ORF (sORF) feature analysis
-│   │   ├── calc_features_ATG.py         # Start codon (ATG) context features & PSSM scores
-│   │   └── utils.py                     # Common utility functions (e.g., ENC calculation)
-│   ├── Data/                            # Data specific to feature extraction
-│   ├── Output/                          # Output files from feature computations
-│   └── python-project/                  # Additional project-specific code
-├── fusion_pipeline.py           # Pipeline for translation, linker selection, codon optimization, etc.
-├── insulin_visualization.py     # Visualization module for insulin-related gene expression data
-├── label_distribution_analysis.py   # Visualization of label distributions from predictions
-├── xgb_feature_importance.py    # Analysis of XGBoost SHAP feature importance
-├── B_model_architecture_analysis.py   # Model architecture evaluation scripts
-├── C_linker_selection.py        # Linker selection for fusion proteins
-├── D_codon_optimization.py      # Codon optimization routines for target genes
-├── E_hypermutable_site_detection.py   # Hypermutable site detection in gene sequences
-└── translation_utils.py         # Utility functions for sequence translation and related tasks
+@article{MenuhinGruman2025STABLES,
+  title={AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits},
+  author={Menuhin-Gruman, Itamar and Arbel-Groissman, Matan and Naki, Doron and Bergman, Shaked and Tuller, Tamir},
+  journal={Science Advances},
+  year={2025},
+  note={Code and data available at https://github.com/<your-repo-url>}
+}
+```
+
+## 📄 Data Availability
+All data necessary to replicate the results are provided in this repository. The processed yeast genome data appears in `genome.xlsx`.
+For instructions on creating `genome.xlsx` from public sources, see [`../genome_extraction_README.md`](../genome_extraction_README.md).
+
+## Reproducibility
+For reproducibility, we recommend installing dependencies from the provided `requirements.txt` file:
+```bash
+pip install -r requirements.txt
 ```
 
 ## Installation
-
 1. **Clone the Repository:**
 
    ```bash
@@ -65,14 +64,9 @@ GeneExpressionModelImprovement/
    ```
 
 ## Usage
-
 ### Running the Main Analysis Pipeline
 
-To execute the full analysis pipeline (which includes feature extraction, model evaluation, and visualization):
-
-```bash
-python src/main.py
-```
+To execute the full analysis pipeline (which includes feature extraction, model evaluation, and visualization), use the relevant modules below.
 
 ### Running Specific Modules
 
@@ -113,26 +107,14 @@ python src/main.py
   python label_distribution_analysis.py
   ```
 
-## Data
-
-- **Raw Data:**  
-  Place your raw data files (e.g., gene sequences, experimental measurements) in the `data/raw_data/` directory.
-
-- **Processed Data:**  
-  The processed outputs generated by the analysis pipelines will be stored in `data/processed_data/`.
-
 ## Figures
-
 The `figures/` directory contains high-resolution plots and visualizations generated by this analysis, ready for inclusion in the publication.
 
 ## Documentation
-
-Additional technical details, methodology, and supplementary results are documented in the `docs/` folder.
+For full scientific background, methodology, and results, see the forthcoming publication (link will be provided here upon publication).
 
 ## License
+This project is distributed under the Creative Commons Attribution-NonCommercial-NoDerivatives 4.0 International (CC BY-NC-ND 4.0) License. For details, refer to the [LICENSE](LICENSE) file.
 
-This project is distributed under the MIT License. For details, refer to the [LICENSE](LICENSE) file.
-
----
-
-For any questions regarding the methodology or usage, please refer to the documentation in the `docs/` folder.
+## Contact
+For any questions regarding the methodology or usage, please refer to the forthcoming publication (link will be provided here upon publication) or contact the authors.

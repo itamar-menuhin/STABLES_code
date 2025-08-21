@@ -1,0 +1,13 @@
+numpy
+pandas
+scikit-learn
+matplotlib
+seaborn
+scipy
+statsmodels
+xgboost
+biopython
+ViennaRNA
+python_codon_tables
+webencodings
+tinycss2
