@@ -25,7 +25,7 @@ For code and data:
   author={Menuhin-Gruman, Itamar and Arbel-Groissman, Matan and Naki, Doron and Bergman, Shaked and Tuller, Tamir},
   journal={Science Advances},
   year={2025},
-  note={Code and data available at https://github.com/<your-repo-url>}
+  note={Code and data available at https://github.com/itamar-menuhin/STABLES_code}
 }
 ```
 
