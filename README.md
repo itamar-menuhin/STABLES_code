@@ -1,4 +1,6 @@
+```
 # STABLES: AI-Directed Gene Fusion for Evolutionary Stability
+
 
 ## Project Overview
 This repository contains the code, data, and analysis for the study:
@@ -29,6 +31,38 @@ For code and data:
 }
 ```
 
+## Repository Structure
+```
+code_repo/
+├── 10_gene_experiment_analysis.py
+├── A_feature_generation/
+│   ├── Code/
+│   ├── Data/
+│   ├── Output/
+│   └── python-project/
+├── B_model_architecture_analysis.py
+├── C_model_apply.py
+├── D_prediction_analysis_insulin.py
+├── E_linker_selection.py
+├── F_codon_optimization.py
+├── fusion_pipeline.py
+├── G_hypermutable_site_detection.py
+├── data/
+│   ├── processed_data/
+│   └── raw_data/
+├── figures/
+├── genome_extraction_README.md
+├── In/
+├── insulin_visualization.py
+├── label_distribution_analysis.py
+├── LICENSE
+├── paper.txt
+├── README.md
+├── requirements.txt
+├── translation_utils.py
+├── xgb_feature_importance.py
+```
+
 ## 📄 Data Availability
 All data necessary to replicate the results are provided in this repository. The processed yeast genome data appears in `genome.xlsx`.
 For instructions on creating `genome.xlsx` from public sources, see [`../genome_extraction_README.md`](../genome_extraction_README.md).
@@ -51,6 +85,7 @@ pip install -r requirements.txt
 
    ```bash
    python -m venv venv
+
    # For Windows:
    venv\Scripts\activate
    # For Unix or macOS:
