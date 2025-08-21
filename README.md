@@ -1,4 +1,3 @@
-```
 # STABLES: AI-Directed Gene Fusion for Evolutionary Stability
 
 
