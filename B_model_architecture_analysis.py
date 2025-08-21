@@ -197,7 +197,7 @@ def visualize_single_model(df, model='KNN_XGB', output_path='figures'):
     Visualize histogram plots for a single model.
     """
     df_model = df[(df.model == model) & (df.train_on == 'all')]
-    for col, binrange in zip(['quantile_top3', 'quantile_top1', 'spearman_corr'],
+    for col, binrange in zip(['quantile_top3', 'quantile_top1'],
                              [(0.9, 1.0), (0.7, 1.0), (0.46, 0.54)]):
         fig, ax = plt.subplots()
         sns.histplot(data=df_model, x=col, ax=ax, binwidth=0.005, stat='percent', binrange=binrange)
@@ -268,22 +268,22 @@ df_bootstrap = pd.concat([df_bootstrap1, df_bootstrap2], ignore_index=True)
 name_append = '_together'
 
 # Generate boxplots for defined metrics
-boxplots = [
-    ('auc', None, ''),
-    ('max_top3', None, '_all'),
-    ('spearman_corr', None, '_all'),
-    ('pearson_corr', None, '_all'),
-    ('quantile_top3', (0.9, 1), '_all'),
-    ('quantile_top1', (0.5, 1), '_all')
-]
-for col, ylim, extra in boxplots:
-    fig, ax = plt.subplots()
-    sns.boxplot(data=df_bootstrap[df_bootstrap.train_on == 'all'], x="model", y=col, ax=ax)
-    fig.suptitle(col)
-    plt.xticks(rotation=15)
-    if ylim:
-        plt.ylim(*ylim)
-    fig.savefig(os.path.join('figures', f'{col}{name_append}{extra}.png'))
+# boxplots = [
+#     ('auc', None, ''),
+#     ('max_top3', None, '_all'),
+#     ('spearman_corr', None, '_all'),
+#     ('pearson_corr', None, '_all'),
+#     ('quantile_top3', (0.9, 1), '_all'),
+#     ('quantile_top1', (0.5, 1), '_all')
+# ]
+# for col, ylim, extra in boxplots:
+#     fig, ax = plt.subplots()
+#     sns.boxplot(data=df_bootstrap[df_bootstrap.train_on == 'all'], x="model", y=col, ax=ax)
+#     fig.suptitle(col)
+#     plt.xticks(rotation=15)
+#     if ylim:
+#         plt.ylim(*ylim)
+#     fig.savefig(os.path.join('figures', f'{col}{name_append}{extra}.png'))
 
 # Plot quantile distribution heatmaps
 df_compare = df_bootstrap[df_bootstrap.train_on == 'all']
