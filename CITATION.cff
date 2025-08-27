@@ -1,0 +1,39 @@
+abstract: "<h1>\U0001F6E0\uFE0F Release: STABLES v1.0</h1>\n<p>This release accompanies\
+  \ the publication:<br><strong>\"AI-directed gene fusing prolongs the evolutionary\
+  \ half-life of synthetic gene circuits\"</strong><br>by <em>Menuhin-Gruman et al.,\
+  \ Science Advances (2025)</em></p>\n<h2>\U0001F4E6 What's included:</h2>\n<ul>\n\
+  <li><strong>Full source code</strong> for feature engineering, model training, and\
+  \ fusion prediction</li>\n<li><strong>Analysis scripts</strong> for linker and stop\
+  \ codon selection</li>\n<li><strong>Datasets</strong> used in the computational\
+  \ pipeline and validation experiments</li>\n<li><strong>All figures</strong> used\
+  \ in the main and supplementary material</li>\n<li><strong>Environment files</strong>\
+  \ (<code>requirements.txt</code>) for full reproducibility</li>\n</ul>\n<h2>\U0001F52C\
+  \ Highlights:</h2>\n<ul>\n<li>Predictive ensemble model (XGBoost + KNN) for selecting\
+  \ endogenous genes (EGs) to stabilize synthetic constructs</li>\n<li>Pipeline to\
+  \ design leaky stop codon fusions with enhanced expression stability</li>\n<li>Extensive\
+  \ experimental validation in <em>S. cerevisiae</em>, including proinsulin expression</li>\n\
+  <li>Feature importance via SHAP analysis</li>\n</ul>\n<h2>\U0001F9EC Data Use Notes:</h2>\n\
+  <p>Yeast genome annotations were derived from publicly available resources (SGD,\
+  \ Ensembl) and processed for feature extraction. Due to size and open accessibility,\
+  \ raw genome files are not hosted here. Scripts and processed summaries (<code>genome.xlsx</code>)\
+  \ are included.</p>\n<h2>\U0001F4C4 License:</h2>\n<p>This work is released under\
+  \ the <strong>Creative Commons Attribution-NonCommercial 4.0 International (CC BY-NC\
+  \ 4.0)</strong> license.</p>\n<p>You are free to use, share, and adapt this material\
+  \ for non-commercial purposes, provided appropriate credit is given.</p>\n<h2>\U0001F517\
+  \ Citation:</h2>\n<p>When using this code or data, please cite both the paper and\
+  \ this Zenodo release:</p>\n<blockquote>\n<p>Menuhin-Gruman, I. et al. (2025). <em>AI-directed\
+  \ gene fusing prolongs the evolutionary half-life of synthetic gene circuits.</em>\
+  \ Science Advances.<br>Zenodo DOI: 10.5281/zenodo.16959725</p>\n</blockquote>"
+authors:
+- affiliation: Tel Aviv University
+  family-names: Menuhin-Gruman
+  given-names: Itamar
+  orcid: https://orcid.org/0000-0001-5394-6949
+cff-version: 1.2.0
+date-released: '2025-08-27'
+doi: 10.5281/zenodo.16959725
+license:
+- cc-by-4.0
+message: If you use this work, please cite it using the metadata from this file.
+title: 'itamar-menuhin/STABLES_code: STABLES v1.0'
+version: v1.0.0
