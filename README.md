@@ -17,18 +17,10 @@ This repository provides:
 ## Citation
 If you use this code, data, or results in your work, please cite:
 
-**Menuhin-Gruman, I., Arbel-Groissman, M., Naki, D., Bergman, S., & Tuller, T. (2025). AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits. Science Advances.**
+Menuhin-Gruman, I. et al. (2025). AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits. Science Advances.
+Zenodo DOI: [![DOI](https://zenodo.org/badge/958100778.svg)](https://doi.org/10.5281/zenodo.16959724)
 
-For code and data:
-```
-@article{MenuhinGruman2025STABLES,
-  title={AI-directed gene fusing prolongs the evolutionary half-life of synthetic gene circuits},
-  author={Menuhin-Gruman, Itamar and Arbel-Groissman, Matan and Naki, Doron and Bergman, Shaked and Tuller, Tamir},
-  journal={Science Advances},
-  year={2025},
-  note={Code and data available at https://github.com/itamar-menuhin/STABLES_code}
-}
-```
+
 
 ## Repository Structure
 ```
